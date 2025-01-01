@@ -1,35 +1,70 @@
-import { Button } from "@/components/ui/button"
 import Image from "next/image"
+import { Button } from "@/components/ui/button"
+import { useState } from "react"
 
 interface ProductCardProps {
+  id: string
   title: string
   description: string
-  price: string
+  price: number
   imageUrl: string
+  onAddToCart: () => void
 }
 
-export function ProductCard({ title, description, price, imageUrl }: ProductCardProps) {
+export function ProductCard({ id, title, description, price, imageUrl, onAddToCart }: ProductCardProps) {
+  const [isAdding, setIsAdding] = useState(false)
+
+  const handleAddToCart = () => {
+    setIsAdding(true)
+    onAddToCart()
+    setTimeout(() => setIsAdding(false), 1000)
+  }
+
   return (
-    <div className="flex flex-col">
-      <div className="relative h-64 mb-4">
-        <Image
-          src={imageUrl}
-          alt={title}
-          fill
-          className="object-cover rounded-t-lg"
-        />
-      </div>
-      <div className="bg-[#FDF4E7] p-6 rounded-b-lg">
-        <h2 className="text-xl font-semibold mb-2">{title}</h2>
-        <p className="text-gray-600 mb-4">{description}</p>
-        <p className="text-xl font-bold mb-4">{price}</p>
-        <div className="flex gap-4">
-          <Button variant="default" className="bg-black text-white hover:bg-gray-800">
-            Lägg till
-          </Button>
-          <Button variant="outline" className="border-black text-black hover:bg-gray-100">
-            Läs mer
-          </Button>
+    <div className="relative w-full max-w-sm mx-auto group">
+      <div className="relative">
+        <div className="absolute top-[-160px] left-1/2 -translate-x-1/2 w-full h-[300px] transition-all duration-300 ease-in-out group-hover:-translate-y-10 group-hover:translate-x-[calc(-50%+12px)] group-hover:rotate-[15deg]">
+          <Image
+            src={imageUrl}
+            alt={title}
+            fill
+            className="object-contain transition-transform duration-300 ease-in-out origin-center"
+            priority
+          />
+        </div>
+
+        <div className="relative mt-32 bg-[#FDF4E7]">
+          <div 
+            className="absolute inset-0 overflow-hidden"
+            style={{
+              backgroundImage: 'url(/paper-texture.png)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              opacity: 0.8
+            }}
+          />
+          
+          <div className="relative z-10 p-8">
+            <h2 className="text-[22px] font-medium mb-3">{title}</h2>
+            <p className="text-gray-700 mb-4 leading-relaxed">{description}</p>
+            <p className="text-[22px] font-medium mb-6">{price} SEK</p>
+            <div className="flex flex-row items-center justify-between gap-4">
+              <Button 
+                className="flex-grow bg-black text-white hover:bg-black/90 rounded-full px-6 py-3 text-base font-normal"
+                onClick={handleAddToCart}
+                disabled={isAdding}
+              >
+                {isAdding ? 'Tillagd!' : 'Lägg till'}
+              </Button>
+              <Button 
+                variant="outline" 
+                className="border-black text-black hover:bg-transparent rounded-full px-6 py-3 text-base font-normal bg-transparent border-opacity-100"
+              >
+                Läs mer
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
