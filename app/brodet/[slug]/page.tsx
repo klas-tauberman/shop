@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { Star } from 'lucide-react'
@@ -70,12 +71,11 @@ export async function generateStaticParams() {
   ]
 }
 
-type PageProps = {
+interface Props {
   params: { slug: string }
-  searchParams: { [key: string]: string | string[] | undefined }
 }
 
-export default async function ProductPage({ params, searchParams }: PageProps) {
+export default async function ProductPage({ params }: Props) {
   const product = await getProduct(params.slug);
 
   if (!product) {
