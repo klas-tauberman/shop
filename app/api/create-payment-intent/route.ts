@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
+// Early return if environment variable is not set
 if (!process.env.STRIPE_SECRET_KEY) {
   console.error('STRIPE_SECRET_KEY is not configured')
   throw new Error('STRIPE_SECRET_KEY is not set')
@@ -25,9 +26,11 @@ export async function POST(req: Request) {
       )
     }
 
-    // Log the Stripe key being used (first 8 chars only for security)
-    const keyPrefix = process.env.STRIPE_SECRET_KEY.substring(0, 8)
-    console.log('Using Stripe key prefix:', keyPrefix)
+    // Only log key prefix if it exists (TypeScript safety)
+    if (process.env.STRIPE_SECRET_KEY) {
+      const keyPrefix = process.env.STRIPE_SECRET_KEY.substring(0, 8)
+      console.log('Using Stripe key prefix:', keyPrefix)
+    }
 
     // Create payment intent
     const paymentIntent = await stripe.paymentIntents.create({
