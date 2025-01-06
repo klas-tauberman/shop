@@ -1,18 +1,27 @@
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
-// Early return if environment variable is not set
-if (!process.env.STRIPE_SECRET_KEY) {
-  console.error('STRIPE_SECRET_KEY is not configured')
-  throw new Error('STRIPE_SECRET_KEY is not set')
-}
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2022-11-15',
-})
+// Initialize stripe only when the API is called
+let stripe: Stripe | null = null
 
 export async function POST(req: Request) {
   try {
+    // Check for stripe key when the API is actually called
+    if (!process.env.STRIPE_SECRET_KEY) {
+      console.error('STRIPE_SECRET_KEY is not configured')
+      return NextResponse.json(
+        { error: 'Payment service is not configured' },
+        { status: 500 }
+      )
+    }
+
+    // Initialize Stripe if not already initialized
+    if (!stripe) {
+      stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+        apiVersion: '2022-11-15',
+      })
+    }
+
     console.log('Starting payment intent creation...')
     
     const { amount, email } = await req.json()
@@ -24,12 +33,6 @@ export async function POST(req: Request) {
         { error: 'Amount and email are required' },
         { status: 400 }
       )
-    }
-
-    // Only log key prefix if it exists (TypeScript safety)
-    if (process.env.STRIPE_SECRET_KEY) {
-      const keyPrefix = process.env.STRIPE_SECRET_KEY.substring(0, 8)
-      console.log('Using Stripe key prefix:', keyPrefix)
     }
 
     // Create payment intent
@@ -55,10 +58,8 @@ export async function POST(req: Request) {
       paymentIntentId: paymentIntent.id
     })
   } catch (error) {
-    // Log the full error for debugging
     console.error('Error creating payment intent:', error)
     
-    // Return a user-friendly error message
     return NextResponse.json(
       { 
         error: 'Ett fel uppstod vid skapandet av betalningen.',
