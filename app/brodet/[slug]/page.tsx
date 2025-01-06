@@ -70,13 +70,12 @@ export async function generateStaticParams() {
   ]
 }
 
-interface PageProps {
-  params: {
-    slug: string
-  }
+type PageProps = {
+  params: { slug: string }
+  searchParams?: { [key: string]: string | string[] | undefined }
 }
 
-export default async function ProductPage({ params }: PageProps) {
+export default async function ProductPage({ params, searchParams }: PageProps) {
   const product = await getProduct(params.slug);
 
   if (!product) {
