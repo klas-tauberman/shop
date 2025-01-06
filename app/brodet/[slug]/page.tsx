@@ -71,12 +71,13 @@ export async function generateStaticParams() {
   ]
 }
 
-interface Props {
-  params: { slug: string }
+type PageProps = {
+  params: Promise<{ slug: string }>
 }
 
-export default async function ProductPage({ params }: Props) {
-  const product = await getProduct(params.slug);
+export default async function ProductPage({ params }: PageProps) {
+  const { slug } = await params;
+  const product = await getProduct(slug);
 
   if (!product) {
     notFound()
@@ -105,7 +106,7 @@ export default async function ProductPage({ params }: Props) {
       <SEO 
         title={product.title}
         description={product.description}
-        canonical={`https://shop.tauberman.se/brodet/${params.slug}`}
+        canonical={`https://shop.tauberman.se/brodet/${slug}`}
         ogImage={product.images[0]}
       />
       <Script
