@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js'
-import { Button } from '@/components/ui/button'
+import { Button } from "@/components/ui/button"
 
 export default function CheckoutForm() {
   const stripe = useStripe()
@@ -38,7 +38,7 @@ export default function CheckoutForm() {
       <Button
         type="submit"
         disabled={!stripe || isProcessing}
-        className="w-full bg-black text-white hover:bg-black/90 rounded-full px-6 py-6 text-base font-normal"
+        className="w-full bg-black text-white hover:bg-black/90 rounded-full px-6 py-3 text-base font-normal"
       >
         {isProcessing ? 'Bearbetar...' : 'Betala nu'}
       </Button>

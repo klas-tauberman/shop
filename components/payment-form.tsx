@@ -8,8 +8,8 @@ import CheckoutForm from './checkout-form'
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 interface PaymentFormProps {
-  customerInfo?: { email: string }
-  isActive?: boolean
+  customerInfo?: { email: string } | null;
+  isActive?: boolean;
 }
 
 export function PaymentForm({ customerInfo, isActive = false }: PaymentFormProps) {
@@ -97,4 +97,3 @@ export function PaymentForm({ customerInfo, isActive = false }: PaymentFormProps
     </div>
   )
 }
-

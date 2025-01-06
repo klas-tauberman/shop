@@ -1,6 +1,5 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
@@ -9,6 +8,7 @@ import { useCart } from '@/contexts/CartContext'
 
 interface Product {
   id: string
+  slug: string
   title: string
   description: string
   price: number
@@ -17,18 +17,20 @@ interface Product {
 
 export default function Home() {
   const router = useRouter()
-  const { addToCart, cartItems } = useCart()
+  const { addToCart } = useCart()
 
   const products: Product[] = [
     {
       id: "1",
+      slug: "tauberman-levain",
       title: "Tauberman LEVAIN",
       description: "Ett luftigt surdegsbröd innehållande hela korn och färskmalet fullkornsvetemjöl.",
-      price: 80,
+      price: 70,
       imageUrl: "/bread.png"
     },
     {
       id: "2",
+      slug: "tauberman-rag",
       title: "Tauberman RÅG",
       description: "Ett saftigt rågbröd med en perfekt balans mellan sötma och syrlighet.",
       price: 85,
@@ -36,6 +38,7 @@ export default function Home() {
     },
     {
       id: "3",
+      slug: "tauberman-special",
       title: "Tauberman SPECIAL",
       description: "Vårt specialbröd med en unik blandning av säsongens bästa ingredienser.",
       price: 90,
@@ -44,7 +47,13 @@ export default function Home() {
   ]
 
   const handleAddToCart = (product: Product) => {
-    addToCart(product)
+    addToCart({
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      quantity: 1,
+      imageUrl: product.imageUrl
+    })
   }
 
   const handleCheckout = () => {
@@ -54,7 +63,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header onCheckout={handleCheckout} />
-      <main className="flex-1 py-4 px-6">
+      <main className="flex-1 py-2 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="mb-[88px]">
             <h1 className="text-[28px] font-normal mb-6 max-w-3xl">
@@ -64,7 +73,11 @@ export default function Home() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             {products.map((product) => (
-              <ProductCard key={product.id} {...product} onAddToCart={() => handleAddToCart(product)} />
+              <ProductCard
+                key={product.id}
+                {...product}
+                onAddToCart={() => handleAddToCart(product)}
+              />
             ))}
           </div>
         </div>

@@ -8,8 +8,8 @@ import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 interface HeaderProps {
-  onCheckout: () => void
-  isCheckoutPage?: boolean
+  onCheckout: () => void;
+  isCheckoutPage?: boolean;
 }
 
 export function Header({ onCheckout, isCheckoutPage = false }: HeaderProps) {

@@ -1,9 +1,13 @@
+'use client'
+
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 
 interface ProductCardProps {
   id: string
+  slug: string
   title: string
   description: string
   price: number
@@ -11,13 +15,20 @@ interface ProductCardProps {
   onAddToCart: () => void
 }
 
-export function ProductCard({ id, title, description, price, imageUrl, onAddToCart }: ProductCardProps) {
+export function ProductCard({ slug, title, description, price, imageUrl, onAddToCart }: ProductCardProps) {
   const [isAdding, setIsAdding] = useState(false)
+  const router = useRouter()
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation()
     setIsAdding(true)
     onAddToCart()
     setTimeout(() => setIsAdding(false), 1000)
+  }
+
+  const handleReadMore = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    router.push(`/brodet/${slug}`)
   }
 
   return (
@@ -60,6 +71,7 @@ export function ProductCard({ id, title, description, price, imageUrl, onAddToCa
               <Button 
                 variant="outline" 
                 className="border-black text-black hover:bg-transparent rounded-full px-6 py-3 text-base font-normal bg-transparent border-opacity-100"
+                onClick={handleReadMore}
               >
                 Läs mer
               </Button>

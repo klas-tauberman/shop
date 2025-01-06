@@ -1,10 +1,12 @@
-import { createPool } from '@vercel/postgres';
+import { createClient } from '@vercel/postgres';
 
-const pool = process.env.POSTGRES_URL
-  ? createPool({
-      connectionString: process.env.POSTGRES_URL,
-    })
-  : null;
+if (!process.env.POSTGRES_URL_NON_POOLING) {
+  throw new Error('POSTGRES_URL_NON_POOLING environment variable is not set');
+}
 
-export default pool;
+const client = createClient({
+  connectionString: process.env.POSTGRES_URL_NON_POOLING
+});
+
+export default client;
 

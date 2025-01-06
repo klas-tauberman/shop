@@ -15,9 +15,14 @@ export default function OrderConfirmation() {
     setOrderNumber(Math.random().toString(36).substr(2, 9).toUpperCase())
   }, [])
 
+  const handleCheckout = () => {
+    // This function is empty because we're already post-checkout
+    // You can add any additional logic here if needed
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
-      <Header cartItemCount={0} onCheckout={() => {}} />
+      <Header onCheckout={handleCheckout} isCheckoutPage={true} />
       <main className="flex-1 py-4 px-6">
         <div className="max-w-2xl mx-auto bg-[#FDF4E7] p-8 rounded-lg shadow-md">
           <h1 className="text-3xl font-bold mb-6 text-center">Tack för din beställning!</h1>

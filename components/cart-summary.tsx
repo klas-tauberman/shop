@@ -1,6 +1,5 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { Minus, Plus, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -34,7 +33,7 @@ export function CartSummary() {
                   <Button
                     variant="outline"
                     size="icon"
-                    className="h-7 w-7 sm:h-8 sm:w-8 rounded-full"
+                    className="h-7 w-7 sm:h-8 sm:w-8 rounded-full flex items-center justify-center"
                     onClick={() => updateQuantity(item.id, item.quantity - 1)}
                   >
                     <Minus className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -43,7 +42,7 @@ export function CartSummary() {
                   <Button
                     variant="outline"
                     size="icon"
-                    className="h-7 w-7 sm:h-8 sm:w-8 rounded-full"
+                    className="h-7 w-7 sm:h-8 sm:w-8 rounded-full flex items-center justify-center"
                     onClick={() => updateQuantity(item.id, item.quantity + 1)}
                   >
                     <Plus className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -52,7 +51,7 @@ export function CartSummary() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-7 w-7 sm:h-8 sm:w-8 rounded-full"
+                  className="h-7 w-7 sm:h-8 sm:w-8 rounded-full flex items-center justify-center"
                   onClick={() => removeFromCart(item.id)}
                 >
                   <Trash2 className="h-3 w-3 sm:h-4 sm:w-4" />

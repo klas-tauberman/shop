@@ -4,7 +4,7 @@ import Stripe from 'stripe'
 import { updateOrderStatus } from '@/lib/db/utils'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2024-12-18.acacia',
+  apiVersion: '2022-11-15',
 })
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!
@@ -12,7 +12,12 @@ const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!
 export async function POST(req: Request) {
   try {
     const body = await req.text()
-    const signature = headers().get('stripe-signature')!
+    const headersList = await headers()
+    const signature = headersList.get('stripe-signature')
+
+    if (!signature) {
+      throw new Error('No stripe signature found in request headers')
+    }
 
     const event = stripe.webhooks.constructEvent(
       body,
