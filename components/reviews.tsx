@@ -101,7 +101,7 @@ export function Reviews({ productId }: ReviewsProps) {
   if (isLoading) return <div>Loading reviews...</div>
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 p-10">
       {error && <div className="text-red-500">{error}</div>}
       <div className="flex items-center gap-4">
         <div className="flex">

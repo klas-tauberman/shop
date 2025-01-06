@@ -12,17 +12,18 @@ export const metadata: Metadata = {
     template: '%s | SUR—DEG'
   },
   description: 'Välkommen till SUR—DEG, ett litet trevligt hantverksbageri mitt i Malmö. Här kan ni beställa ert bröd och uppleva äkta hantverkstradition.',
+  metadataBase: new URL('https://shop.tauberman.se'),
   keywords: ['surdeg', 'bröd', 'bageri', 'Malmö', 'hantverksbageri'],
   authors: [{ name: 'SUR—DEG' }],
   creator: 'SUR—DEG',
   openGraph: {
     type: 'website',
     locale: 'sv_SE',
-    url: 'https://your-domain.com',
+    url: 'https://shop.tauberman.se',
     siteName: 'SUR—DEG',
     images: [
       {
-        url: 'https://your-domain.com/og-image.jpg',
+        url: 'https://shop.tauberman.se/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'SUR—DEG Hantverksbageri i Malmö',

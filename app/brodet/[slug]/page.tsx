@@ -21,7 +21,7 @@ async function getProduct(slug: string): Promise<Product | null> {
       title: "Tauberman LEVAIN",
       description: "Ett luftigt surdegsbröd innehållande hela korn och färskmalet fullkornsvetemjöl.",
       price: 70,
-      images: ["/bread.png"],
+      images: ["/levain.webp", "/levain-open.webp"],
       rating: 4,
       reviewCount: 2,
       ingredients: ["Färskmalet fullkornsvetemjöl av Dalavete från Wärpinge Gård (kultursort)", "siktat vetemjöl", "surdeg (vete&råg)", "oraffinerat havssalt"],
@@ -34,11 +34,11 @@ async function getProduct(slug: string): Promise<Product | null> {
       slug: "tauberman-rag",
       title: "Tauberman RÅG",
       description: "Ett saftigt rågbröd med en perfekt balans mellan sötma och syrlighet.",
-      price: 85,
-      images: ["/bread.png"],
+      price: 75,
+      images: ["/rag.webp", "/rag-open.webp"],
       rating: 4,
       reviewCount: 2,
-      ingredients: ["ingrediens 1", "ingrediens 2", "ingrediens 3"],
+      ingredients: ["Rågmjöl", "vatten", "surdeg", "salt"],
       weight: "cirka 700 gram",
       allergyInfo: "Nötter hanteras i bageriet",
       storageInfo: "Förvara i rumstemperatur"
@@ -48,11 +48,11 @@ async function getProduct(slug: string): Promise<Product | null> {
       slug: "tauberman-special",
       title: "Tauberman SPECIAL",
       description: "Vårt specialbröd med en unik blandning av säsongens bästa ingredienser.",
-      price: 90,
-      images: ["/bread.png"],
+      price: 75,
+      images: ["/special.webp", "/special-open.webp"],
       rating: 5,
       reviewCount: 1,
-      ingredients: ["ingrediens 1", "ingrediens 2", "ingrediens 3"],
+      ingredients: ["Vetemjöl", "rågmjöl", "vatten", "surdeg", "salt", "säsongens specialingredienser"],
       weight: "cirka 900 gram",
       allergyInfo: "Nötter hanteras i bageriet",
       storageInfo: "Förvara i rumstemperatur"
@@ -120,7 +120,7 @@ export default async function ProductPage({ params }: PageProps) {
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
               {/* Image Gallery - 3 columns on desktop, 1 column on mobile */}
               <div className="lg:col-span-3 space-y-4">
-                <div className="aspect-square relative bg-[#d9d9d9] rounded-lg overflow-hidden">
+                <div className="aspect-square relative bg-[#d9d9d9] rounded-[20px] overflow-hidden">
                   <Image
                     src={product.images[0]}
                     alt={product.title}
@@ -130,15 +130,15 @@ export default async function ProductPage({ params }: PageProps) {
                   />
                 </div>
                 <div className="hidden lg:grid grid-cols-2 gap-4">
-                  <div className="aspect-square relative bg-[#d9d9d9] rounded-lg overflow-hidden">
+                  <div className="aspect-square relative bg-[#d9d9d9] rounded-[20px] overflow-hidden">
                     <Image
-                      src={product.images[0]}
+                      src={product.images[1] || product.images[0]}
                       alt={`${product.title} detail 1`}
                       fill
                       className="object-cover"
                     />
                   </div>
-                  <div className="aspect-square relative bg-[#d9d9d9] rounded-lg overflow-hidden">
+                  <div className="aspect-square relative bg-[#d9d9d9] rounded-[20px] overflow-hidden">
                     <Image
                       src={product.images[0]}
                       alt={`${product.title} detail 2`}
@@ -200,15 +200,15 @@ export default async function ProductPage({ params }: PageProps) {
 
             {/* Mobile-only additional images */}
             <div className="lg:hidden grid grid-cols-2 gap-4 mt-8">
-              <div className="aspect-square relative bg-[#d9d9d9] rounded-lg overflow-hidden">
+              <div className="aspect-square relative bg-[#d9d9d9] rounded-[20px] overflow-hidden">
                 <Image
-                  src={product.images[0]}
+                  src={product.images[1] || product.images[0]}
                   alt={`${product.title} detail 1`}
                   fill
                   className="object-cover"
                 />
               </div>
-              <div className="aspect-square relative bg-[#d9d9d9] rounded-lg overflow-hidden">
+              <div className="aspect-square relative bg-[#d9d9d9] rounded-[20px] overflow-hidden">
                 <Image
                   src={product.images[0]}
                   alt={`${product.title} detail 2`}

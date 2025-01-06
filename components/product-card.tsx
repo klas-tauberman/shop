@@ -12,11 +12,21 @@ interface ProductCardProps {
   description: string
   price: number
   imageUrl: string
+  hoverImageUrl: string
   onAddToCart: () => void
 }
 
-export function ProductCard({ slug, title, description, price, imageUrl, onAddToCart }: ProductCardProps) {
+export function ProductCard({ 
+  slug, 
+  title, 
+  description, 
+  price, 
+  imageUrl,
+  hoverImageUrl, 
+  onAddToCart 
+}: ProductCardProps) {
   const [isAdding, setIsAdding] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
   const router = useRouter()
 
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -26,56 +36,52 @@ export function ProductCard({ slug, title, description, price, imageUrl, onAddTo
     setTimeout(() => setIsAdding(false), 1000)
   }
 
-  const handleReadMore = (e: React.MouseEvent) => {
-    e.stopPropagation()
+  const handleCardClick = () => {
     router.push(`/brodet/${slug}`)
   }
 
   return (
-    <div className="relative w-full max-w-sm mx-auto group">
-      <div className="relative">
-        <div className="absolute top-[-160px] left-1/2 -translate-x-1/2 w-full h-[300px] transition-all duration-300 ease-in-out group-hover:-translate-y-10 group-hover:translate-x-[calc(-50%+12px)] group-hover:rotate-[15deg]">
+    <div 
+      className="relative w-full max-w-sm mx-auto cursor-pointer"
+      onClick={handleCardClick}
+    >
+      <div 
+        className="relative"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <div className="relative aspect-square mb-4">
           <Image
-            src={imageUrl}
+            src={isHovered ? hoverImageUrl : imageUrl}
             alt={title}
             fill
-            className="object-contain transition-transform duration-300 ease-in-out origin-center"
+            className="object-cover transition-opacity duration-300 rounded-[20px]"
             priority
           />
         </div>
-
-        <div className="relative mt-32 bg-[#FDF4E7]">
-          <div 
-            className="absolute inset-0 overflow-hidden"
-            style={{
-              backgroundImage: 'url(/paper-texture.png)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              opacity: 0.8
-            }}
-          />
+        
+        <div className="space-y-3">
+          <h2 className="text-[20px] font-medium">{title}</h2>
+          <p className="text-gray-700 leading-relaxed">{description}</p>
+          <h2 className="text-[20px] font-medium">{price} SEK</h2>
           
-          <div className="relative z-10 p-8">
-            <h2 className="text-[22px] font-medium mb-3">{title}</h2>
-            <p className="text-gray-700 mb-4 leading-relaxed">{description}</p>
-            <p className="text-[22px] font-medium mb-6">{price} SEK</p>
-            <div className="flex flex-row items-center justify-between gap-4">
-              <Button 
-                className="flex-grow bg-black text-white hover:bg-black/90 rounded-full px-6 py-3 text-base font-normal"
-                onClick={handleAddToCart}
-                disabled={isAdding}
-              >
-                {isAdding ? 'Tillagd!' : 'Lägg till'}
-              </Button>
-              <Button 
-                variant="outline" 
-                className="border-black text-black hover:bg-transparent rounded-full px-6 py-3 text-base font-normal bg-transparent border-opacity-100"
-                onClick={handleReadMore}
-              >
-                Läs mer
-              </Button>
-            </div>
+          <div className="space-y-4">
+            <Button 
+              className="w-full bg-black text-white hover:bg-black/90 rounded-full px-6 py-6 text-base font-normal"
+              onClick={handleAddToCart}
+              disabled={isAdding}
+            >
+              {isAdding ? 'Tillagd!' : 'Lägg till'}
+            </Button>
+            <button 
+              className="w-full text-center underline text-base hover:text-gray-600"
+              onClick={(e) => {
+                e.stopPropagation();
+                router.push(`/brodet/${slug}`);
+              }}
+            >
+              Läs mer om brödet
+            </button>
           </div>
         </div>
       </div>

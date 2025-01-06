@@ -34,15 +34,23 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.setItem('cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
+  useEffect(() => {
+    console.log('Cart updated:', cartItems);
+  }, [cartItems]);
+
   const addToCart = (item: CartItem) => {
+    console.log('Adding item to cart:', item);
     setCartItems(prevItems => {
-      const existingItem = prevItems.find(i => i.id === item.id);
-      if (existingItem) {
-        return prevItems.map(i => 
-          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
-        );
+      const updatedItems = prevItems.map(i => 
+        i.id === item.id 
+          ? { ...i, quantity: i.quantity + item.quantity } 
+          : i
+      );
+      if (!updatedItems.some(i => i.id === item.id)) {
+        updatedItems.push(item);
       }
-      return [...prevItems, { ...item, quantity: 1 }];
+      console.log('Updated cart:', updatedItems);
+      return updatedItems;
     });
   };
 

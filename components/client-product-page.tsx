@@ -15,14 +15,16 @@ export default function ClientProductPage({ product }: ClientProductPageProps) {
   const { addToCart } = useCart()
 
   const handleAddToCart = () => {
+    console.log('Adding to cart, quantity:', quantity);
     addToCart({
       id: product.id,
       title: product.title,
       price: product.price,
       quantity: quantity,
       imageUrl: product.images[0]
-    })
-  }
+    });
+    setQuantity(1); // Reset quantity after adding to cart
+  };
 
   return (
     <div className="space-y-4">
@@ -35,7 +37,7 @@ export default function ClientProductPage({ product }: ClientProductPageProps) {
             variant="outline"
             size="icon"
             className="h-10 w-10 rounded-full"
-            onClick={() => setQuantity(Math.max(1, quantity - 1))}
+            onClick={() => setQuantity(prevQuantity => Math.max(1, prevQuantity - 1))}
             aria-label="Decrease quantity"
           >
             <Minus className="h-4 w-4" />
@@ -45,14 +47,18 @@ export default function ClientProductPage({ product }: ClientProductPageProps) {
             id="quantity"
             min="1"
             value={quantity}
-            onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+            onChange={(e) => {
+              const newQuantity = Math.max(1, parseInt(e.target.value) || 1);
+              console.log('Quantity changed to:', newQuantity);
+              setQuantity(newQuantity);
+            }}
             className="w-16 text-center border rounded-md py-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           />
           <Button
             variant="outline"
             size="icon"
             className="h-10 w-10 rounded-full"
-            onClick={() => setQuantity(quantity + 1)}
+            onClick={() => setQuantity(prevQuantity => prevQuantity + 1)}
             aria-label="Increase quantity"
           >
             <Plus className="h-4 w-4" />
@@ -67,8 +73,8 @@ export default function ClientProductPage({ product }: ClientProductPageProps) {
         Lägg till
       </Button>
 
-      <div className="bg-[#f9e7dc] p-4 rounded-lg">
-        <p className="text-sm">
+      <div className="bg-[#FCDFCD] p-4 rounded-lg">
+        <p className="text-base">
           Avhämtning sker på tisdagar och torsdagar mellan kl 12 – 16.
         </p>
       </div>

@@ -13,6 +13,7 @@ interface Product {
   description: string
   price: number
   imageUrl: string
+  hoverImageUrl: string
 }
 
 export default function Home() {
@@ -26,23 +27,26 @@ export default function Home() {
       title: "Tauberman LEVAIN",
       description: "Ett luftigt surdegsbröd innehållande hela korn och färskmalet fullkornsvetemjöl.",
       price: 70,
-      imageUrl: "/bread.png"
+      imageUrl: "/levain.webp",
+      hoverImageUrl: "/levain-open.webp"
     },
     {
       id: "2",
       slug: "tauberman-rag",
       title: "Tauberman RÅG",
-      description: "Ett saftigt rågbröd med en perfekt balans mellan sötma och syrlighet.",
-      price: 85,
-      imageUrl: "/bread.png"
+      description: "Ett luftigt surdegsbröd innehållande hela korn och färskmalet fullkornsvetemjöl.",
+      price: 75,
+      imageUrl: "/rag.webp",
+      hoverImageUrl: "/rag-open.webp"
     },
     {
       id: "3",
       slug: "tauberman-special",
       title: "Tauberman SPECIAL",
-      description: "Vårt specialbröd med en unik blandning av säsongens bästa ingredienser.",
-      price: 90,
-      imageUrl: "/bread.png"
+      description: "Ett luftigt surdegsbröd innehållande hela korn och färskmalet fullkornsvetemjöl.",
+      price: 75,
+      imageUrl: "/special.webp",
+      hoverImageUrl: "/special-open.webp"
     }
   ]
 
@@ -65,7 +69,7 @@ export default function Home() {
       <Header onCheckout={handleCheckout} />
       <main className="flex-1 py-2 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="mb-[88px]">
+          <div className="mb-[40px]"> {/* Updated margin class */}
             <h1 className="text-[28px] font-normal mb-6 max-w-3xl">
               Välkommen till det lilla trevliga hantverksbageriet mitt i Malmö. Här kan ni beställa er bröd lorem ipsum dolar set amed.
             </h1>

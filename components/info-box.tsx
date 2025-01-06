@@ -1,6 +1,6 @@
 export function InfoBox() {
   return (
-    <div className="bg-[#FDF4E7] p-4 sm:p-6 rounded-lg">
+    <div className="bg-[#FCDFCD] p-4 sm:p-6 rounded-lg">
       <h2 className="text-lg sm:text-xl font-medium mb-4">Information</h2>
       <p className="mb-4 sm:mb-6 text-base">
         Din beställning kommer vara färdig inom 2-3 dagar för upphämtning. Du får ett meddelande i god tid innan.
